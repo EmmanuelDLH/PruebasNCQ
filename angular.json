@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "PruebasNCQ"
+    }
+  },
+  "defaultProject": "PruebasNCQ",
+  "cli": {
+    "analytics": false
+  }
 }
