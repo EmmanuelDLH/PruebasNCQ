@@ -1,8 +1,8 @@
 import { browser, by, element, protractor } from 'protractor';
 
 var datosPruebas = [];
-var globalTimeout = 2000;
-var shortGlobalTimeout = 500;
+var globalTimeout = 1000;
+var shortGlobalTimeout = 50;
 
 const fs = require('fs');
 const csvData = fs.readFileSync('src/data/pruebasFactun.csv', 'utf8');
@@ -11,6 +11,7 @@ textLines.forEach(function(row) {
   datosPruebas.push(row.split(';'));
 })
 datosPruebas.shift();
+datosPruebas.pop();
 
   describe('Pruebas para Factun:', () => {
     let originalTimeout;
@@ -91,8 +92,6 @@ datosPruebas.shift();
 
         element(by.xpath('/html/body/div[3]/form/div/div[2]/div/input')).submit().then(() => {
             browser.sleep(globalTimeout);
-            console.log(datos[18]);
-            console.log('El costo no puede ser menor a cero.');
             expect(element(by.xpath(datos[17])).getText()).toEqual(datos[18]);
         });
       });
