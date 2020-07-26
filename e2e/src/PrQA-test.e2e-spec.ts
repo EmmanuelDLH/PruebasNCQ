@@ -1,19 +1,20 @@
 import { browser, by, element, protractor } from 'protractor';
 
-var datosPruebas = [];
-var globalTimeout = 1000;
-var shortGlobalTimeout = 50;
+const datosPruebas = [];
+const globalTimeout = 1000;
+const shortGlobalTimeout = 50;
 
 const fs = require('fs');
 const csvData = fs.readFileSync('src/data/pruebasFactun.csv', 'utf8');
-var textLines = csvData.split('\r\n');
+const textLines = csvData.split('\r\n');
+// tslint:disable-next-line: only-arrow-functions
 textLines.forEach(function(row) {
   datosPruebas.push(row.split(';'));
-})
+});
 datosPruebas.shift();
 datosPruebas.pop();
 
-  describe('Pruebas para Factun:', () => {
+describe('Pruebas para Factun:', () => {
     let originalTimeout;
 
     beforeEach(async () => {
@@ -45,54 +46,55 @@ datosPruebas.pop();
       browser.restart();
       jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     });
-    
-    datosPruebas.forEach(function (datos) {
+
+    // tslint:disable-next-line: only-arrow-functions
+    datosPruebas.forEach(function(datos) {
       it(datos[1], async () => {
         browser.sleep(2000);
-        element(by.xpath('//*[@id="tipo_codigo"]')).element(by.css(datos[2])).click();
+        element(by.xpath('//*[@id="tipo_codigo"]')).element(by.css(datos[2])).click(); // Tipo Código Comercial
         browser.sleep(shortGlobalTimeout);
-        element(by.name('codigo')).sendKeys(datos[3]);
+        element(by.name('codigo')).sendKeys(datos[3]); // Código Comercial
         browser.sleep(shortGlobalTimeout);
-        element(by.name('codigo_hacienda')).sendKeys(datos[4]);
+        element(by.name('codigo_hacienda')).sendKeys(datos[4]); // Código Hacienda
         browser.sleep(shortGlobalTimeout);
-        element(by.name('descripcion')).sendKeys(datos[5]);
+        element(by.name('descripcion')).sendKeys(datos[5]); // Descripción
         browser.sleep(shortGlobalTimeout);
-        element(by.xpath('//*[@id="producto_unidad_id"]')).element(by.css(datos[6])).click();
+        element(by.xpath('//*[@id="producto_unidad_id"]')).element(by.css(datos[6])).click(); // Unidad
         browser.sleep(shortGlobalTimeout);
-        element(by.xpath('//*[@id="moneda_id"]')).element(by.css(datos[7])).click();
+        element(by.xpath('//*[@id="moneda_id"]')).element(by.css(datos[7])).click(); // Moneda
         browser.sleep(shortGlobalTimeout);
-        element(by.name('partida_arancelaria')).sendKeys(datos[8]);
+        element(by.name('partida_arancelaria')).sendKeys(datos[8]); // Partida Arancelaria
         browser.sleep(shortGlobalTimeout);
-        element(by.xpath('//*[@id="impuesto_id"]')).element(by.css(datos[9])).click();
+        element(by.xpath('//*[@id="impuesto_id"]')).element(by.css(datos[9])).click(); // Impuesto
         browser.sleep(shortGlobalTimeout);
-        element(by.xpath('//*[@id="imp_prorrata_asociado_id"]')).element(by.css(datos[10])).click();
+        element(by.xpath('//*[@id="imp_prorrata_asociado_id"]')).element(by.css(datos[10])).click(); // Impuesto Prorrata
         browser.sleep(shortGlobalTimeout);
         element(by.name('costo')).sendKeys('text was',
                       protractor.Key.CONTROL, 'a', protractor.Key.NULL,
-                      datos[11]);
+                      datos[11]); // Costo
         browser.sleep(shortGlobalTimeout);
         element(by.name('utilidad')).sendKeys('text was',
                       protractor.Key.CONTROL, 'a', protractor.Key.NULL,
-                      datos[12]);
+                      datos[12]); // Utilidad
         browser.sleep(shortGlobalTimeout);
         element(by.name('precio_sin_impuesto')).sendKeys('text was',
                       protractor.Key.CONTROL, 'a', protractor.Key.NULL,
-                      datos[13]);
+                      datos[13]); // Precio Sin Impuesto
         browser.sleep(shortGlobalTimeout);
         element(by.name('PrecioFinal')).sendKeys('text was',
                       protractor.Key.CONTROL, 'a', protractor.Key.NULL,
-                      datos[14]);
+                      datos[14]); // Precio Final
         browser.sleep(shortGlobalTimeout);
         element(by.name('base_imponible')).sendKeys('text was',
                       protractor.Key.CONTROL, 'a', protractor.Key.NULL,
-                      datos[15]);
+                      datos[15]); // Base Imponible
         browser.sleep(shortGlobalTimeout);
         element(by.xpath('//*[@id="activo"]')).element(by.css(datos[16])).click();
-        browser.sleep(globalTimeout);
+        browser.sleep(globalTimeout); // Activo
 
-        element(by.xpath('/html/body/div[3]/form/div/div[2]/div/input')).submit().then(() => {
+        element(by.xpath('/html/body/div[3]/form/div/div[2]/div/input')).submit().then(() => { // Boton Crear
             browser.sleep(globalTimeout);
-            expect(element(by.xpath(datos[17])).getText()).toEqual(datos[18]);
+            expect(element(by.xpath(datos[17])).getText()).toEqual(datos[18]); // Error o respuesta esperada
         });
       });
     });
