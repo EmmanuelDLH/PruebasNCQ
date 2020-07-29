@@ -1,7 +1,7 @@
 import { browser, by, element, protractor } from 'protractor';
 
 const datosPruebas = [];
-const globalTimeout = 1000;
+const globalTimeout = 2200;
 const shortGlobalTimeout = 50;
 
 const fs = require('fs');
